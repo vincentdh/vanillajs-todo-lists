@@ -1,7 +1,7 @@
 /** @readonly */
 export const CONTAINER_BOX_ATTRIBUTES = /** @type {const} */ ([
-  'title',
-  'title-level',
+  'heading',
+  'heading-level',
   'no-padding',
 ])
 

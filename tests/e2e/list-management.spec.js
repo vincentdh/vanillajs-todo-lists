@@ -35,7 +35,7 @@ test.describe('List Management', () => {
     await expect(navItem(page, 'My Test List')).toHaveCount(1)
     await expect(
       page.locator('list-view container-box#container'),
-    ).toHaveAttribute('title', 'My Test List')
+    ).toHaveAttribute('heading', 'My Test List')
   })
 
   test('does not create a list when the prompt is cancelled', async ({
@@ -113,6 +113,6 @@ test.describe('List Management', () => {
 
     await expect(
       page.locator('list-view container-box#container'),
-    ).toHaveAttribute('title', 'Test List')
+    ).toHaveAttribute('heading', 'Test List')
   })
 })

@@ -110,8 +110,8 @@ export class NavLists extends BasicComponentInterface {
     const container = /** @type {ContainerBox} */ (
       document.createElement('container-box')
     )
-    container.title = 'Lists'
-    container.setAttribute('title-level', '2')
+    container.setAttribute('heading', 'Lists')
+    container.setAttribute('heading-level', '2')
     return container
   }
 

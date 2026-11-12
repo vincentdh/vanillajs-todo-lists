@@ -30,14 +30,14 @@ export class ContainerBox extends QueuableComponent(
 
   /** @type {Record<ContainerBoxAttribute, AttributeSetter>} */
   _attributeSetters = {
-    title: (_, newValue) => {
-      if (newValue === this.#title) return false
-      this.#nextTitle = newValue
+    heading: (_, newValue) => {
+      if (newValue === this.#heading) return false
+      this.#nextHeading = newValue
       return true
     },
-    'title-level': (_, newValue) => {
-      if (newValue === this.#titleLevel) return false
-      this.#nextTitleLevel = newValue
+    'heading-level': (_, newValue) => {
+      if (newValue === this.#headingLevel) return false
+      this.#nextHeadingLevel = newValue
       return true
     },
     'no-padding': (_, newValue) => {
@@ -48,34 +48,34 @@ export class ContainerBox extends QueuableComponent(
   }
 
   /**
+   * @type {string}
+   */
+  #heading = ''
+
+  /**
+   * @type {string}
+   */
+  #headingLevel = '1'
+
+  /**
+   * @type {string | null}
+   */
+  #nextHeading = null
+
+  /**
+   * @type {string | null}
+   */
+  #nextHeadingLevel = null
+
+  /**
    * @type {boolean | null}
    */
   #nextNoPadding = null
 
   /**
-   * @type {string | null}
-   */
-  #nextTitle = null
-
-  /**
-   * @type {string | null}
-   */
-  #nextTitleLevel = null
-
-  /**
    * @type {boolean}
    */
   #noPadding = false
-
-  /**
-   * @type {string}
-   */
-  #title = ''
-
-  /**
-   * @type {string}
-   */
-  #titleLevel = '1'
 
   constructor() {
     super()
@@ -87,7 +87,7 @@ export class ContainerBox extends QueuableComponent(
     const container = this.#createDiv('container')
     const header = this.#createDiv('header')
 
-    const title = document.createElement(`h${this.#titleLevel}`)
+    const title = document.createElement(`h${this.#headingLevel}`)
     title.id = 'box-title'
     title.innerText = ''
 
@@ -117,16 +117,16 @@ export class ContainerBox extends QueuableComponent(
 
     const titleTag = this.root.getElementById('box-title')
     if (titleTag !== null) {
-      if (this.#nextTitle !== null) {
-        titleTag.innerText = this.#nextTitle
-        this.#title = this.#nextTitle
-        this.#nextTitle = null
+      if (this.#nextHeading !== null) {
+        titleTag.innerText = this.#nextHeading
+        this.#heading = this.#nextHeading
+        this.#nextHeading = null
       }
 
-      if (this.#nextTitleLevel !== null) {
-        titleTag.replaceWith(this.#createTitleTag(this.#nextTitleLevel))
-        this.#titleLevel = this.#nextTitleLevel
-        this.#nextTitleLevel = null
+      if (this.#nextHeadingLevel !== null) {
+        titleTag.replaceWith(this.#createTitleTag(this.#nextHeadingLevel))
+        this.#headingLevel = this.#nextHeadingLevel
+        this.#nextHeadingLevel = null
       }
     }
     if (this.#nextNoPadding !== null) {
@@ -171,10 +171,10 @@ export class ContainerBox extends QueuableComponent(
       document.createElement(`h${level}`)
     )
     tag.id = 'box-title'
-    tag.innerText = this.#title
-    if (this.#nextTitleLevel !== null) {
-      this.#titleLevel = this.#nextTitleLevel
-      this.#nextTitleLevel = null
+    tag.innerText = this.#heading
+    if (this.#nextHeadingLevel !== null) {
+      this.#headingLevel = this.#nextHeadingLevel
+      this.#nextHeadingLevel = null
     }
     return tag
   }
