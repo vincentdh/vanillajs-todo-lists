@@ -58,13 +58,6 @@ const shuffleArray = (items) => {
  * @template T
  * @overload
  * @param {Array<T>} items
- * @param {1} max
- * @returns {T}
- */
-/**
- * @template T
- * @overload
- * @param {Array<T>} items
  * @param {number} max
  * @returns {Array<T>}
  */
