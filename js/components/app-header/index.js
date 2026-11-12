@@ -94,7 +94,7 @@ export class AppHeader extends BasicComponentInterface {
 
   #createHelpLink() {
     const link = document.createElement('button-custom')
-    link.setAttribute('href', '/docs')
+    link.setAttribute('href', './docs')
     link.setAttribute('href-target', '_blank')
     link.setAttribute('variant', 'ghost')
     link.setAttribute('hide-label', 'true')
