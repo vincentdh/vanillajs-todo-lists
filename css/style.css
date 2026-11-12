@@ -1,0 +1,47 @@
+:root {
+  --border-color: oklch(0.8264 0.1797 162.250568);
+  --background-color: oklch(0.1912 0.0286 247.76);
+  --foreground-color: oklch(0.8452 0 0);
+  --surface: oklch(0.13 0.0286 247.76);
+  --accent: oklch(0.735 0.2144 317.83);
+  --scrollbar-thumb: var(--border-color);
+  --scrollbar-track: transparent;
+
+  --danger-bg: oklch(0.3622 0.0998 8.54);
+  --danger-fg: contrast-color(var(--danger-bg));
+
+  --warn-bg: oklch(0.78 0.18 72);
+  --warn-fg: oklch(0 0 0);
+
+  --info-bg: oklch(0.72 0.16 250);
+  --info-fg: oklch(0.28 0.08 250);
+
+  --unit: 0.25rem;
+  --spacing: calc(2 * var(--unit));
+  --radius: calc(4 * var(--unit));
+  --button-cursor: pointer;
+  --font: sans-serif;
+  --shadow-highlight: var(--shadow-highlight-accent);
+  --shadow-highlight-accent: var(--accent) 0rem 0rem 0.4rem;
+  --shadow-highlight-border: var(--border-color) 0rem 0rem 0.4rem;
+
+  font-family: var(--font);
+  font-size: 14pt;
+  stroke: var(--foreground-color);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+}

@@ -1,0 +1,11 @@
+:host {
+  padding: var(--spacing);
+  display: flex;
+  min-height: 0;
+  height: 100%;
+  gap: var(--spacing);
+}
+
+nav-list {
+  background-color: red;
+}

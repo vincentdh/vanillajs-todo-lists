@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>html-builder test harness</title>
+  </head>
+  <body>
+    <script type="module">
+      import { buildTagElement } from '../../js/utils/html-builder.js'
+      import { LICENSE_ACKNOWLEDGMENT } from '../../js/components/app-header/license-acknowledgment.js'
+
+      window.buildTagElement = buildTagElement
+      window.LICENSE_ACKNOWLEDGMENT = LICENSE_ACKNOWLEDGMENT
+      window.harnessReady = true
+    </script>
+  </body>
+</html>

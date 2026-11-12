@@ -1,0 +1,155 @@
+:host {
+  display: inline-block;
+}
+
+:host > * {
+  display: inline-flex;
+  align-items: center;
+}
+
+:host(:focus),
+:host(:focus-visible),
+*:focus,
+*:focus-visible {
+  outline: 2px solid transparent;
+}
+
+:host(:focus-visible) > *,
+:host > *:focus-visible {
+  outline: 2px dotted var(--accent);
+}
+
+/* default variant */
+:host {
+  --btn-background-color: var(--background-color);
+}
+
+:host(:state(accent)) {
+  --btn-background-color: color-mix(in oklab, var(--accent) 100%, white 25%);
+  --btn-color: black;
+}
+
+:host(:state(ghost)) {
+  --btn-background-color: transparent;
+  border: none;
+}
+
+:host(:state(danger)) {
+  --btn-background-color: var(--danger-bg);
+  --btn-color: var(--danger-fg);
+}
+
+:host(:state(info)) {
+  --btn-background-color: var(--info-bg);
+  --btn-color: var(--info-fg);
+}
+
+:host(:state(warn)) {
+  --btn-background-color: var(--warn-bg);
+  --btn-color: var(--warn-fg);
+}
+
+@keyframes reveal {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+:host > * {
+  background-color: var(--btn-background-color);
+  color: var(--btn-color);
+  font-size: large;
+  padding: calc(0.75 * var(--unit)) 1rem;
+  border-color: var(--border-color);
+  border-style: outset;
+  border-radius: var(--radius);
+  box-sizing: border-box;
+}
+
+:host(:state(icon)) > * > svg-icon {
+  aspect-ratio: 1;
+  margin: 0 5px;
+}
+
+:host(:state(hide-label)) > * {
+  padding: 0.2rem;
+  aspect-ratio: 1;
+}
+
+:host(:state(hide-label)) > * slot {
+  display: none;
+}
+
+:host(:state(hide-label)) > * > svg-icon {
+  margin: 0.25rem 0;
+}
+
+:host(:hover) > * {
+  cursor: var(--button-cursor);
+  background-color: color-mix(
+    in oklch longer hue,
+    white 8%,
+    var(--btn-background-color) 92%
+  );
+
+  box-shadow: var(--shadow-highlight-accent);
+}
+
+:host(:active) > * {
+  cursor: var(--button-cursor);
+  border-style: inset;
+}
+
+:host(:disabled) > * {
+  background-color: alpha(white / 50%);
+}
+
+:host(:state(icon):state(ghost)) > * {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  border: none;
+  max-width: 50px;
+  overflow: clip;
+  padding-left: 8px;
+  padding-right: 8px;
+  transition: max-width 0.3s ease;
+}
+
+:host(:state(icon):state(ghost):state(hide-label):focus-visible) > *,
+:host(:state(icon):state(ghost):state(hide-label):focus) > *,
+:host(:state(icon):state(ghost):state(hide-label):hover) > * {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+/* :host(:state(icon):state(ghost):state(hide-label):focus-visible) > * > *, */
+/* :host(:state(icon):state(ghost):state(hide-label):focus) > * > *, */
+:host(:state(icon):state(ghost):state(hide-label):hover) > * > * {
+  stroke-width: 4px;
+  filter: drop-shadow(var(--shadow-highlight-border));
+  color: var(--border-color);
+}
+
+:host(:state(icon):state(ghost):not(:state(hide-label)):hover) > * {
+  max-width: 400px;
+  transition: max-width 1s ease;
+}
+
+:host(:state(icon):state(ghost):not(:state(hide-label))) span:has(slot) {
+  margin-left: 0.75rem;
+}
+
+:host(:state(icon):state(hide-label)) > * {
+  border-radius: 9999px;
+}
+
+:host(:state(icon):state(hide-label)) svg-icon {
+  /* margin: auto 25%; */
+  margin: 0 auto 0 auto;
+  padding: 0.1rem;
+}
