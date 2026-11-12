@@ -26,6 +26,9 @@ export class ListView extends BasicComponentInterface {
     return 'list-view'
   }
 
+  /** @type {HTMLDivElement | null} */
+  #actions = null
+
   /** @type {ContainerBox | null} */
   #containerBox = null
 
@@ -132,8 +135,8 @@ export class ListView extends BasicComponentInterface {
     renameBtn.addEventListener('click', this.#renameList)
 
     actions.appendChild(renameBtn)
-
-    this.#containerBox.appendChild(actions)
+    this.#actions = actions
+    this.#containerBox.appendChild(this.#actions)
   }
 
   /**
@@ -370,6 +373,12 @@ export class ListView extends BasicComponentInterface {
     container.setAttribute('title', this.#list?.name || '')
 
     formContainer.querySelector('input')?.focus()
+
+    if (this.#actions !== null) {
+      this.#containerBox
+        ?.querySelector('#actionsPlaceholder')
+        ?.replaceWith(this.#actions)
+    }
   }
 
   #renderNoList() {
@@ -379,6 +388,9 @@ export class ListView extends BasicComponentInterface {
       content.classList.add('nolist')
       content.innerText = 'No list selected'
     }
+    const actionsPlaceholder = document.createElement('div')
+    actionsPlaceholder.setAttribute('id', 'actionsPlaceholder')
+    this.#actions?.replaceWith(actionsPlaceholder)
   }
 
   #updateFooter() {
@@ -395,6 +407,8 @@ export class ListView extends BasicComponentInterface {
         this.#footer.style.justifyContent = 'flex-end'
         this.#footer.replaceChildren(b)
       }
+    } else {
+      this.#footer?.replaceChildren()
     }
   }
 }
