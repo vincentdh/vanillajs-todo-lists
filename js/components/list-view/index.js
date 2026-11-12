@@ -105,8 +105,8 @@ export class ListView extends BasicComponentInterface {
     )
 
     box.id = 'container'
-    box.title = ''
-    box.setAttribute('title-level', '2')
+    box.setAttribute('heading', '')
+    box.setAttribute('heading-level', '2')
     box.setAttribute('no-padding', 'true')
     this.#containerBox = box
 
@@ -353,7 +353,7 @@ export class ListView extends BasicComponentInterface {
     const newName = await renameModal.open()
     if (newName !== null && newName.trim() !== '') {
       this.#list.rename(newName.trim())
-      this.#containerBox?.setAttribute('title', newName.trim())
+      this.#containerBox?.setAttribute('heading', newName.trim())
       this.dispatchEvent(new ListRenamedEvent(this.#list.id))
     }
   }
@@ -370,7 +370,7 @@ export class ListView extends BasicComponentInterface {
     content.appendChild(formContainer)
     content.appendChild(this.#createItemsList())
 
-    container.setAttribute('title', this.#list?.name || '')
+    container.setAttribute('heading', this.#list?.name || '')
 
     formContainer.querySelector('input')?.focus()
 
@@ -384,7 +384,7 @@ export class ListView extends BasicComponentInterface {
   #renderNoList() {
     const content = this.root.getElementById('content')
     if (content !== null && this.#containerBox !== null) {
-      this.#containerBox.setAttribute('title', '')
+      this.#containerBox.setAttribute('heading', '')
       content.classList.add('nolist')
       content.innerText = 'No list selected'
     }
