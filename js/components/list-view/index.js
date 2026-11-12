@@ -349,7 +349,8 @@ export class ListView extends BasicComponentInterface {
     })
     const newName = await renameModal.open()
     if (newName !== null && newName.trim() !== '') {
-      this.#list.rename(newName)
+      this.#list.rename(newName.trim())
+      this.#containerBox?.setAttribute('title', newName.trim())
       this.dispatchEvent(new ListRenamedEvent(this.#list.id))
     }
   }
