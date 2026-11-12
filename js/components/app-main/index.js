@@ -79,7 +79,7 @@ export class AppMain extends BasicComponentInterface {
         randomMinMax(1, categories.length),
       )) {
         const cat = demoData[c]
-        const title = randomPick(cat.listNames, 1)
+        const title = randomPick(cat.listNames, 1)[0]
         const items = randomPick(cat.items, cat.items.length)
         const list = lists.create(title)
         for (const item of items) {
