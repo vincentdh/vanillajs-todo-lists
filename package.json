@@ -30,6 +30,7 @@
     "globals": "^17.14.0",
     "http-server": "^14.1.1",
     "prettier": "^3.9.10",
+    "typescript": "6.0.3",
     "vitest": "^5.1.0"
   }
 }
