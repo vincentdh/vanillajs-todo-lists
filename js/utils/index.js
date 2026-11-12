@@ -4,11 +4,19 @@
 const scrollbarStylesheet = new CSSStyleSheet()
 
 /**
- * @type {("/css/scrollbar-non-webkit.css" | "/css/scrollbar-webkit.css")}
+ * @type {"scrollbar-non-webkit.css" | "scrollbar-webkit.css"}
  */
-const targetedStyleSheet = /firefox/i.test(navigator.userAgent)
-  ? '/css/scrollbar-non-webkit.css'
-  : '/css/scrollbar-webkit.css'
+const targetedStyleSheetName = /firefox/i.test(navigator.userAgent)
+  ? 'scrollbar-non-webkit.css'
+  : 'scrollbar-webkit.css'
+
+/**
+ * @type {URL}
+ */
+const targetedStyleSheet = new URL(
+  `../../css/${targetedStyleSheetName}`,
+  import.meta.url,
+)
 scrollbarStylesheet.replaceSync(await (await fetch(targetedStyleSheet)).text())
 
 /**

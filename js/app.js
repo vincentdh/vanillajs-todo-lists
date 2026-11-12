@@ -7,7 +7,7 @@
  * > This file must be loaded with the attribute `type=module`
  *
  * @example
- * <script type="module" src="/js/app.js"></script>
+ * <script type="module" src="./js/app.js"></script>
  *
  * @module
  */
