@@ -38,8 +38,12 @@ jobs:
         run: pnpm run test:unit
 
   e2e:
-    name: End-to-end tests
+    name: End-to-end tests (${{ matrix.project }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, firefox]
     steps:
       - uses: actions/checkout@v4
 
@@ -57,11 +61,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps ${{ matrix.project }}
 
       - name: Run end-to-end tests
-        run: pnpm run test:e2e
+        run: pnpm exec playwright test --project=${{ matrix.project }}
         env:
           CI: true
 
@@ -69,6 +73,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.project }}
           path: playwright-report/
           retention-days: 30
