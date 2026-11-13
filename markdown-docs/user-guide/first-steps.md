@@ -3,6 +3,7 @@ title: First Steps
 order: 10
 group: User guide
 ---
+
 # First steps
 
 The first time you are accessing the application, a welcome message will ask you if you want demontration data to be created automatically.
