@@ -18,6 +18,11 @@
     "docs": "./markdown-docs",
     "clubSidebarItems": true,
     "copyPage": { "enabled": false },
-    "docGroups": ["Portfolio context", "Under the hood", "User guide"]
+    "docGroups": ["Portfolio context", "Under the hood", "User guide"],
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "Fira Code",
+      "mono": "Fira Code"
+    }
   }
 }
