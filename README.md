@@ -43,6 +43,14 @@ pnpm run test:e2e:ui     # Open the Playwright UI
 pnpm run test:e2e:report # Open the last Playwright HTML report
 ```
 
+## Documentation
+
+Documentation is generated in the `docs/` folder using [typedoc](https://typedoc.org/).
+
+```shell
+pnpm run docs:build
+```
+
 ## License
 
 See [LICENSE](./LICENSE)

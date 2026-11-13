@@ -7,9 +7,10 @@
     "check:format": "prettier --check .",
     "check:lint": "eslint .",
     "check:types": "tsc -p tsconfig.json",
+    "dev": "http-server . -p 5173 --gzip false",
     "fix:lint": "eslint . --fix",
     "fix:format": "prettier --write .",
-    "dev": "http-server . -p 5173 --gzip false",
+    "docs:build": "typedoc",
     "test": "pnpm run test:unit && playwright test",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
@@ -30,6 +31,7 @@
     "globals": "^17.14.0",
     "http-server": "^14.1.1",
     "prettier": "^3.9.10",
+    "typedoc": "^0.28.20",
     "typescript": "6.0.3",
     "vitest": "^5.1.0"
   }
