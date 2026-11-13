@@ -1,2 +1,4 @@
 allowBuilds:
   esbuild: true
+patchedDependencies:
+  '@clean-jsdoc-theme/rang@5.2.1': patches/@clean-jsdoc-theme__rang@5.2.1.patch
