@@ -1,6 +1,7 @@
 ---
 title: First Steps
 order: 10
+group: User guide
 ---
 # First steps
 

@@ -1,6 +1,7 @@
 ---
 title: Create, rename and delete list
 order: 20
+group: User guide
 ---
 # Create, rename and delete list
 
