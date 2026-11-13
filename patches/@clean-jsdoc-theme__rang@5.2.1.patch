@@ -1,0 +1,16 @@
+diff --git a/dist/index.js b/dist/index.js
+index 3b0964e396082551dab28ce1f9d928e7faf3f00f..def3da0df52bada099e84e7661a3103d9651de43 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -3945,7 +3945,10 @@ function MdxImg({ src, alt, ...rest }) {
+ 		class: "my-4 block",
+ 		dangerouslySetInnerHTML: { __html: markup }
+ 	});
+-	const resolvedSrc = !!src && src.startsWith("/") && !src.startsWith("//") ? withBase(basePath, src) : src;
++	// The bridge already prefixes basePath onto served `_assets/` images, so don't add it again.
++	const servedAssetPrefix = (basePath ?? "/").replace(/\/+$/, "") + "/_assets/";
++	const alreadyServed = !!src && basePath !== "/" && src.startsWith(servedAssetPrefix);
++	const resolvedSrc = !!src && src.startsWith("/") && !src.startsWith("//") && !alreadyServed ? withBase(basePath, src) : src;
+ 	return /* @__PURE__ */ jsx("img", {
+ 		src: resolvedSrc,
+ 		alt: alt ?? "",
