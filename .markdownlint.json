@@ -1,4 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/v0.41.1/schema/markdownlint-config-schema.json",
-  "single-h1": { "front_matter_title": "" }
+  "single-h1": { "front_matter_title": "" },
+  "line-length": {
+    "tables": false,
+    "heading_line_length": 90
+  }
 }

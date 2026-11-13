@@ -44,6 +44,5 @@ group: User guide
 2. Confirm the action \
    ![Delete all confirmation](./images/nuke-modal.png)
 
-> [!Note]
-> When the action is completed, the page will reload and the
+> [!Note] When the action is completed, the page will reload and the
 > [welcome message](/user-guide/first-steps) will be showned.

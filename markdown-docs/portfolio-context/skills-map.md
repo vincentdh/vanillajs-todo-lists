@@ -6,7 +6,8 @@ order: 20
 
 # Skills map
 
-Each table lists a skill, the file that shows it best, and the documentation page that explains it.
+Each table lists a skill, the file that shows it best, and the documentation
+page that explains it.
 
 ## Design patterns
 
