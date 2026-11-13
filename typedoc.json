@@ -1,0 +1,11 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["./js"],
+  "tsconfig": "./tsconfig.json",
+  "entryPointStrategy": "expand",
+  "outputs": [{ "name": "html", "path": "docs/" }],
+  "readme": "README.md",
+  "name": "VanillaJS To-do Lists",
+  "excludeExternals": true,
+  "excludePrivate": false
+}
