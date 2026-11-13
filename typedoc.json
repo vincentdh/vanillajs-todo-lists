@@ -17,6 +17,7 @@
     "basePath": "/docs",
     "docs": "./markdown-docs",
     "clubSidebarItems": true,
-    "copyPage": { "enabled": false }
+    "copyPage": { "enabled": false },
+    "docGroups": ["Portfolio context", "Under the hood", "User guide"]
   }
 }
