@@ -25,7 +25,7 @@
 }
 
 :host(:state(accent)) {
-  --btn-background-color: color-mix(in oklab, var(--accent) 100%, white 25%);
+  --btn-background-color: var(--accent);
   --btn-color: black;
 }
 
