@@ -1,7 +1,3 @@
----
-title: Design decisions
----
-
 # Design decisions
 
 This application is a technical demonstration. This page explains the general choices behind the code, then lists the skills it demonstrates and where to find each one.
