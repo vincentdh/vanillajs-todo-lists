@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>button-custom test harness</title>
+    <style>
+      /*
+       * Theme variables the button-custom component reads from its page.
+       * Fixed values so the styling tests do not depend on css/style.css.
+       */
+      :root {
+        /*
+         * One obvious color per variant, so a person looking at the page or
+         * at a failure screenshot can tell the variants apart:
+         * default white, accent green, info blue, warn orange, danger red.
+         * Every text color is different too, so a test cannot pass with the
+         * text color of another variant.
+         */
+        --background-color: rgb(255, 255, 255);
+        --border-color: rgb(90, 90, 90);
+        --accent: rgb(0, 200, 80);
+        --danger-bg: rgb(210, 0, 0);
+        --danger-fg: rgb(255, 255, 200);
+        --info-bg: rgb(0, 90, 220);
+        --info-fg: rgb(255, 255, 255);
+        --warn-bg: rgb(255, 150, 0);
+        --warn-fg: rgb(60, 30, 0);
+        --unit: 0.25rem;
+        --radius: calc(4 * var(--unit));
+        --button-cursor: pointer;
+        --shadow-highlight-accent: var(--accent) 0rem 0rem 0.4rem;
+        --shadow-highlight-border: var(--border-color) 0rem 0rem 0.4rem;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      /*
+       * Page colors. A variant that sets no text color (default, ghost)
+       * inherits the dark purple below, which differs from every *-fg variable
+       * above and from black. The gray background keeps the white default
+       * button and the transparent ghost button visible.
+       */
+      body {
+        background-color: rgb(225, 225, 225);
+        color: rgb(70, 0, 110);
+      }
+      main {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Test stage: the spec creates <button-custom> elements inside it -->
+    <main id="stage"></main>
+
+    <script type="module">
+      import {
+        SVGIcon,
+        AppHeader,
+        AppMain,
+        ButtonCustom,
+        ListView,
+        NavLists,
+        ContainerBox,
+      } from '../../js/components/index.js'
+
+      customElements.define(SVGIcon.tag, SVGIcon)
+      customElements.define(AppHeader.tag, AppHeader)
+      customElements.define(AppMain.tag, AppMain)
+      customElements.define(ButtonCustom.tag, ButtonCustom)
+      customElements.define(ListView.tag, ListView)
+      customElements.define(NavLists.tag, NavLists)
+      customElements.define(ContainerBox.tag, ContainerBox)
+      window.harnessReady = true
+    </script>
+  </body>
+</html>

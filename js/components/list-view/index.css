@@ -1,0 +1,133 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  flex-basis: 4;
+  flex-grow: 1;
+  content: layout;
+}
+
+@keyframes addItem {
+  from {
+    width: 0;
+    opacity: 0;
+    height: 0;
+  }
+
+  to {
+    width: 100%;
+    opacity: 1;
+    height: auto;
+  }
+}
+
+#content {
+  display: flex;
+  flex-flow: column;
+  overflow: clip;
+  min-height: 0;
+  height: 100%;
+}
+
+#content.nolist {
+  justify-content: center;
+  align-items: center;
+}
+
+#content form {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  justify-content: center;
+  gap: var(--spacing);
+  padding: var(--spacing) 0;
+  width: 100%;
+}
+
+#content form input {
+  border-radius: var(--radius);
+  width: 60ch;
+  padding: 0 var(--radius);
+  border: 0.2rem var(--border-color) outset;
+  font-size: large;
+}
+
+#content form input:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-highlight);
+}
+
+#content form input:focus {
+  border: 0.2rem var(--border-color) inset;
+}
+
+#content #items {
+  flex-grow: 1;
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+#items > *.item:nth-child(even) {
+  --bg-grad-from: rgba(255, 255, 255, 0.05);
+}
+
+#items > *:nth-child(odd) {
+  --bg-grad-from: alpha(from var(--surface) / 0.5);
+}
+
+#items > div {
+  padding: var(--spacing) 0;
+  animation: addItem 600ms ease-in-out forwards;
+  animation-delay: calc(var(--i) * 30ms);
+  opacity: 0;
+  line-height: 2rem;
+  background: linear-gradient(90deg, var(--bg-grad-from) 0%, transparent 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: stretch;
+}
+
+#items > div > *:last-child {
+  display: none;
+  margin-right: 2rem;
+  gap: var(--spacing);
+}
+
+#items > div:hover > *:last-child {
+  display: flex;
+}
+
+.completed {
+  text-decoration: double line-through;
+}
+
+:not(.completed) > .item-label > *:first-child {
+  display: none;
+}
+
+div.completed > .item-label > *:nth-child(2) {
+  display: none;
+}
+
+.item-label {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #items > div {
+    animation: none;
+    opacity: 1;
+  }
+}

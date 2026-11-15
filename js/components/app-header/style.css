@@ -1,0 +1,26 @@
+:host {
+  height: calc(var(--unit) * 20);
+  flex: none;
+  background: var(--surface);
+  border-bottom: var(--unit) solid var(--border-color);
+}
+
+header {
+  padding-left: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: var(--foreground-color);
+}
+
+button:hover svg {
+  filter: drop-shadow(0px 0px 0.1rem var(--accent));
+  stroke: var(--border-color);
+}

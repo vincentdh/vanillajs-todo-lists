@@ -1,0 +1,23 @@
+:host {
+  scrollbar-color: auto;
+}
+
+:host * {
+  scrollbar-width: auto;
+}
+
+*::-webkit-scrollbar {
+  width: calc(0.8 * var(--spacing));
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 5px;
+  background: var(--border-color);
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}

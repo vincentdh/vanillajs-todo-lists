@@ -1,0 +1,68 @@
+:host {
+  flex: 1;
+  flex-basis: 1;
+  min-width: 250px;
+  flex-shrink: 0;
+  max-width: 375px;
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--unit) * 1);
+  margin: 0;
+  padding-left: 1ch;
+}
+
+.badge {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: small;
+  font-weight: bolder;
+
+  border-color: var(--accent);
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 999px;
+
+  padding: 0.1rem 0.25rem;
+}
+
+li {
+  box-sizing: border-box;
+  position: relative;
+  cursor: var(--button-cursor);
+  user-select: none;
+  border-bottom-width: 1px;
+  border-image-slice: 1;
+  border-bottom-style: solid;
+  border-color: transparent;
+}
+
+li.selected {
+  list-style-type: disclosure-closed;
+  font-weight: bold;
+}
+
+li::marker {
+  color: var(--border-color);
+  font-size: x-large;
+  line-height: 0px;
+}
+
+li:hover {
+  color: var(--accent);
+  border-image-source: radial-gradient(
+    circle,
+    var(--accent) 0%,
+    var(--border-color) 100%
+  );
+}
+
+li.selected::marker {
+  color: var(--border-color);
+}

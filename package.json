@@ -1,0 +1,42 @@
+{
+  "name": "vanillajs-todo-lists",
+  "version": "1.0.0",
+  "description": "VanillaJS To-do Lists: multiple lists stored in localStorage, built with Web Components and tested with Vitest and Playwright.",
+  "scripts": {
+    "check": "tsc -p tsconfig.json && pnpm run check:format && pnpm run check:lint",
+    "check:format": "prettier --check .",
+    "check:lint": "eslint .",
+    "check:types": "tsc -p tsconfig.json",
+    "dev": "http-server . -p 5173 --gzip false",
+    "fix:lint": "eslint . --fix",
+    "fix:format": "prettier --write .",
+    "docs:build": "typedoc",
+    "markdownlint": "markdownlint-cli2 --config .markdownlint-cli2.json",
+    "site:stage": "pnpm run docs:build && rm -rf dist && mkdir dist && cp -r assets css data docs icons js types dist/ && cp index.html favicon.ico site.webmanifest dist/",
+    "test": "pnpm run test:unit && playwright test",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "Vincent D. Handfield",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@clean-jsdoc-theme/typedoc": "^5.2.1",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.40.0",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-perfectionist": "^5.13.0",
+    "globals": "^17.14.0",
+    "http-server": "^14.1.1",
+    "markdownlint-cli2": "^0.24.1",
+    "prettier": "^3.9.10",
+    "typedoc": "^0.28.20",
+    "typescript": "6.0.3",
+    "vitest": "^5.1.0"
+  }
+}

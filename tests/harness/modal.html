@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>modal test harness</title>
+    <style>
+      /*
+       * Theme variables the modal and its buttons read from the page.
+       * Fixed values so the tests do not depend on css/style.css.
+       */
+      :root {
+        --background-color: rgb(20, 20, 30);
+        --foreground-color: rgb(230, 230, 230);
+        --surface: rgb(30, 30, 45);
+        --border-color: rgb(120, 200, 160);
+        --accent: rgb(200, 100, 230);
+        --danger-bg: rgb(160, 40, 40);
+        --danger-fg: rgb(255, 255, 255);
+        --info-bg: rgb(60, 120, 200);
+        --info-fg: rgb(0, 20, 60);
+        --warn-bg: rgb(230, 180, 40);
+        --warn-fg: rgb(0, 0, 0);
+        --font: sans-serif;
+        --font-size: 1rem;
+        --unit: 0.25rem;
+        --radius: calc(4 * var(--unit));
+        --button-cursor: pointer;
+        --shadow-highlight-accent: var(--accent) 0rem 0rem 0.4rem;
+        --shadow-highlight-border: var(--border-color) 0rem 0rem 0.4rem;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      main {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Element that should regain focus when a modal closes -->
+    <button id="opener">Open</button>
+
+    <script type="module">
+      // Same module the app uses, exposed so the spec can build and open dialogs
+      import { Modal } from '../../js/modal.js'
+      import {
+        SVGIcon,
+        AppHeader,
+        AppMain,
+        ButtonCustom,
+        ListView,
+        NavLists,
+        ContainerBox,
+      } from '../../js/components/index.js'
+
+      customElements.define(SVGIcon.tag, SVGIcon)
+      customElements.define(AppHeader.tag, AppHeader)
+      customElements.define(AppMain.tag, AppMain)
+      customElements.define(ButtonCustom.tag, ButtonCustom)
+      customElements.define(ListView.tag, ListView)
+      customElements.define(NavLists.tag, NavLists)
+      customElements.define(ContainerBox.tag, ContainerBox)
+      window.Modal = Modal
+      window.harnessReady = true
+    </script>
+  </body>
+</html>
