@@ -1,0 +1,97 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main, dev]
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Select the Cloudflare Pages target
+        type: choice
+        options:
+          - dev
+          - main-preview
+          - production
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  # Sanity check: the same unit and e2e tests as on pull requests
+  tests:
+    uses: ./.github/workflows/tests.yml
+
+  stage:
+    name: Build the site
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@v3
+        with:
+          version: 12.11.2
+          runtime: node@24
+          cache: true
+          install: false
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Stage site
+        run: |
+          pnpm run site:stage
+
+      - name: Upload site
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
+
+  deploy:
+    name: Deploy to Cloudflare Pages (preview or production)
+    needs: stage
+    runs-on: ubuntu-latest
+    steps:
+      # Safety guard for manual trigger. Production can run only on main
+      - name: Refuse production from a non-main ref
+        if: inputs.target == 'production' && github.ref != 'refs/heads/main'
+        run: |
+          echo "Production deploys must run from main" >&2
+          exit 1
+
+      - name: Download site
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist/
+
+      - name: Deploy to Cloudflare Pages production
+        if: github.event_name == 'release'
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=main
+
+      - name: Deploy to Cloudflare Pages (branch)
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        uses: cloudflare/wrangler-action@v4
+        env:
+          PAGES_BRANCH: >-
+            ${{
+              github.event_name == 'push' && (github.ref_name == 'main' && 'main-preview' || 'dev') ||
+              inputs.target == 'production' && 'main' ||
+              inputs.target
+            }}
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=${{ env.PAGES_BRANCH }}
