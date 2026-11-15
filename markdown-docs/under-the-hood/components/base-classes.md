@@ -6,31 +6,40 @@ order: 30
 
 # Component base classes
 
-Every custom element of the application extends `BasicComponentInterface`. The
-components are split into two groups:
+Every custom element of the application extends
+[`BasicComponentInterface`](/module/lib-interfaces-basic-component-interface/basiccomponentinterface).
+The components are split into two groups:
 
-- **App components** (`app-header`, `app-main`, `list-view`, `nav-lists`) extend
-  `BasicComponentInterface` directly.
-- **Platform components** (`button-custom`, `container-box`, `svg-icon`) also
-  use the `QueuableComponent` mixin, which turns attribute changes into batched
-  renders.
+- **App components** ([`app-header`](/module/components-app-header/appheader),
+  [`app-main`](/module/components-app-main/appmain),
+  [`list-view`](/module/components-list-view/listview),
+  [`nav-lists`](/module/components-nav-lists/navlists)) extend
+  [`BasicComponentInterface`](/module/lib-interfaces-basic-component-interface/basiccomponentinterface)
+  directly.
+- **Platform components**
+  ([`button-custom`](/module/components-button-custom/buttoncustom),
+  [`container-box`](/module/components-container-box/containerbox),
+  [`svg-icon`](/module/components-svg-icon/svgicon)) also use the
+  [`QueuableComponent`](/module/lib-interfaces-queuable-component-mixin/queuablecomponent)
+  mixin, which turns attribute changes into batched renders.
 
-| File                                             | Exports                   |
-| ------------------------------------------------ | ------------------------- |
-| `js/lib/interfaces/basic-component-interface.js` | `BasicComponentInterface` |
-| `js/lib/interfaces/queuable-component-mixin.js`  | `QueuableComponent`       |
+| File                                                                                                 | Exports                                                                                               |
+| ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| [`js/lib/interfaces/basic-component-interface.js`](/module/lib-interfaces-basic-component-interface) | [`BasicComponentInterface`](/module/lib-interfaces-basic-component-interface/basiccomponentinterface) |
+| [`js/lib/interfaces/queuable-component-mixin.js`](/module/lib-interfaces-queuable-component-mixin)   | [`QueuableComponent`](/module/lib-interfaces-queuable-component-mixin/queuablecomponent)              |
 
 ## `BasicComponentInterface`
 
-`BasicComponentInterface` extends `HTMLElement` and gives each component three
-things.
+[`BasicComponentInterface`](/module/lib-interfaces-basic-component-interface/basiccomponentinterface)
+extends `HTMLElement` and gives each component three things.
 
 - **A tag name.** The static getter `tag` throws `Not implemented` in the base
-  class. Each component overrides it, and `js/app.js` uses it to register the
-  element: `customElements.define(SVGIcon.tag, SVGIcon)`.
+  class. Each component overrides it, and [`js/app.js`](/module/app) uses it to
+  register the element: `customElements.define(SVGIcon.tag, SVGIcon)`.
 - **A shadow root.** The constructor attaches an open shadow root and the `root`
   getter returns it. A component can opt out by calling `super(true)`. In that
-  case, reading `root` throws an error. `svg-icon` is the only component that
+  case, reading `root` throws an error.
+  [`svg-icon`](/module/components-svg-icon/svgicon) is the only component that
   opts out: it renders its `<svg>` in the light DOM.
 - **Stylesheet adoption.** A component pushes its `CSSStyleSheet` objects into
   the `stylesheets` array, then calls `adoptStyleSheets()`. The method appends
@@ -57,8 +66,9 @@ export class AppHeader extends BasicComponentInterface {
 
 ## `QueuableComponent`
 
-`QueuableComponent` is a mixin: a function that takes a base class and returns a
-new class that extends it.
+[`QueuableComponent`](/module/lib-interfaces-queuable-component-mixin/queuablecomponent)
+is a mixin: a function that takes a base class and returns a new class that
+extends it.
 
 ```js
 export class SVGIcon extends QueuableComponent(BasicComponentInterface) {
@@ -149,11 +159,13 @@ parameter of type `any[]`.
 ### A mixin instead of a second base class
 
 - **What:** the render scheduling is a mixin applied to
-  `BasicComponentInterface`, not a class that the platform components extend.
+  [`BasicComponentInterface`](/module/lib-interfaces-basic-component-interface/basiccomponentinterface),
+  not a class that the platform components extend.
 - **Why:** to demonstrate the mixin pattern together with its typing, which is
   the complex part: the attribute names are inferred from the base class and
   checked against the setters.
-- **Alternative:** an intermediate base class between `BasicComponentInterface`
+- **Alternative:** an intermediate base class between
+  [`BasicComponentInterface`](/module/lib-interfaces-basic-component-interface/basiccomponentinterface)
   and the platform components.
 - **Cost:** the typing is harder to read, and it needs `any[]` for the base
   constructor.
@@ -165,7 +177,8 @@ parameter of type `any[]`.
 - **Why:** JavaScript has no `protected` keyword. The underscore marks a member
   that belongs to the contract between the mixin and the component, and that
   outside code should not call.
-- **Comparison with the app components:** `list-view` and `nav-lists` have a
-  public `render()` method that does a similar job. Nothing enforces that method
-  or its name: these components do not use the mixin, so they have no contract
-  to follow.
+- **Comparison with the app components:**
+  [`list-view`](/module/components-list-view/listview) and
+  [`nav-lists`](/module/components-nav-lists/navlists) have a public `render()`
+  method that does a similar job. Nothing enforces that method or its name:
+  these components do not use the mixin, so they have no contract to follow.

@@ -6,15 +6,17 @@ order: 31
 
 # `button-custom`
 
-`button-custom` is the button of the application. It is a platform component: it
-is configured through attributes and uses the `QueuableComponent` mixin to
-render.
+[`button-custom`](/module/components-button-custom/buttoncustom) is the button
+of the application. It is a platform component: it is configured through
+attributes and uses the
+[`QueuableComponent`](/module/lib-interfaces-queuable-component-mixin/queuablecomponent)
+mixin to render.
 
-| File                                       | Content                                         |
-| ------------------------------------------ | ----------------------------------------------- |
-| `js/components/button-custom/index.js`     | The `ButtonCustom` class                        |
-| `js/components/button-custom/constants.js` | The allowed attribute names, variants and types |
-| `js/components/button-custom/style.css`    | The styles, adopted by the shadow root          |
+| File                                                                                     | Content                                                                   |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| [`js/components/button-custom/index.js`](/module/components-button-custom)               | The [`ButtonCustom`](/module/components-button-custom/buttoncustom) class |
+| [`js/components/button-custom/constants.js`](/module/components-button-custom-constants) | The allowed attribute names, variants and types                           |
+| `js/components/button-custom/style.css`                                                  | The styles, adopted by the shadow root                                    |
 
 ## Usage
 
@@ -42,22 +44,23 @@ hidden, because it gives the button its accessible name.
 
 ## Attributes
 
-| Attribute     | Values                                                 | Default   | Effect                                                                      |
-| ------------- | ------------------------------------------------------ | --------- | --------------------------------------------------------------------------- |
-| `variant`     | `default`, `accent`, `info`, `warn`, `danger`, `ghost` | `default` | Sets the colors of the button.                                              |
-| `icon`        | An icon name from `svg-icon`                           | none      | Shows the icon before the label.                                            |
-| `icon-size`   | Any CSS length                                         | `1rem`    | Sets the width and height of the icon.                                      |
-| `hide-label`  | Present or absent                                      | absent    | Hides the label visually.                                                   |
-| `type`        | `button`, `submit`, `reset`                            | `button`  | Submits or resets the parent form on click.                                 |
-| `disabled`    | Present or absent                                      | absent    | Removes the button from the tab order and stops it from acting on the form. |
-| `href`        | A URL                                                  | none      | Renders the button as a link.                                               |
-| `href-target` | A link target, such as `_blank`                        | none      | Sets the `target` of the link.                                              |
+| Attribute     | Values                                                              | Default   | Effect                                                                      |
+| ------------- | ------------------------------------------------------------------- | --------- | --------------------------------------------------------------------------- |
+| `variant`     | `default`, `accent`, `info`, `warn`, `danger`, `ghost`              | `default` | Sets the colors of the button.                                              |
+| `icon`        | An icon name from [`svg-icon`](/module/components-svg-icon/svgicon) | none      | Shows the icon before the label.                                            |
+| `icon-size`   | Any CSS length                                                      | `1rem`    | Sets the width and height of the icon.                                      |
+| `hide-label`  | Present or absent                                                   | absent    | Hides the label visually.                                                   |
+| `type`        | `button`, `submit`, `reset`                                         | `button`  | Submits or resets the parent form on click.                                 |
+| `disabled`    | Present or absent                                                   | absent    | Removes the button from the tab order and stops it from acting on the form. |
+| `href`        | A URL                                                               | none      | Renders the button as a link.                                               |
+| `href-target` | A link target, such as `_blank`                                     | none      | Sets the `target` of the link.                                              |
 
 Each attribute has a setter in `_attributeSetters`. The setter validates the new
 value before storing it:
 
 - `variant` and `type` are checked against the lists in `constants.js`.
-- `icon` is checked against the icon names exported by `svg-icon`.
+- `icon` is checked against the icon names exported by
+  [`svg-icon`](/module/components-svg-icon/svgicon).
 - `icon-size` is checked with `CSS.supports('width', value)`, so any length that
   the browser accepts is valid.
 
@@ -113,9 +116,10 @@ result depends on `href`.
 | Role          | The host element has `role="button"` | The link keeps its native role |
 | Focus         | The host has `tabindex="0"`          | The link is focusable natively |
 
-In both cases, the inner element contains the optional `<svg-icon>` and a
-`<span class="label">` that holds a `<slot>`. The label text stays in the light
-DOM and is projected through the slot.
+In both cases, the inner element contains the optional
+[`<svg-icon>`](/module/components-svg-icon/svgicon) and a `<span class="label">`
+that holds a `<slot>`. The label text stays in the light DOM and is projected
+through the slot.
 
 ## Keyboard
 
@@ -135,10 +139,10 @@ behavior of the `<a>` applies.
 
 ## Forms
 
-`button-custom` is a form-associated custom element: the class sets
-`static formAssociated = true` and calls `attachInternals()`. The browser then
-gives the component a reference to its parent form through
-`ElementInternals.form`.
+[`button-custom`](/module/components-button-custom/buttoncustom) is a
+form-associated custom element: the class sets `static formAssociated = true`
+and calls `attachInternals()`. The browser then gives the component a reference
+to its parent form through `ElementInternals.form`.
 
 On click, the component reads its `type`:
 
@@ -149,7 +153,8 @@ On click, the component reads its `type`:
 
 A disabled button, or a button rendered as a link, never acts on the form.
 
-The application uses this in `list-view`: the "+ Add" button has
+The application uses this in
+[`list-view`](/module/components-list-view/listview): the "+ Add" button has
 `type="submit"`, and the form that contains it handles the `submit` event.
 
 ## Accessible name
@@ -210,9 +215,11 @@ const BUTTON_VARIANTS = /** @type {const} */ ([
 ```
 
 The same array is used at runtime to validate an attribute and at type-check
-time to define `ButtonVariant`, so the two cannot drift apart. The helper
-`isOneOf` is a type guard: after `isOneOf(BUTTON_VARIANTS, value)` returns
-`true`, `value` has the type `ButtonVariant`.
+time to define
+[`ButtonVariant`](/module/components-button-custom-constants/buttonvariant), so
+the two cannot drift apart. The helper [`isOneOf`](/module/utils/isoneof) is a
+type guard: after `isOneOf(BUTTON_VARIANTS, value)` returns `true`, `value` has
+the type `ButtonVariant`.
 
 ## Decisions
 
@@ -221,11 +228,13 @@ time to define `ButtonVariant`, so the two cannot drift apart. The helper
 - **What:** the shadow root contains a `<span>`, not a native `<button>`. The
   host element itself carries `role="button"` and `tabindex="0"`, and handles
   Enter and Space.
-- **Why:** the other components treat `<button-custom>` as the button: they add
-  their listeners to it, focus it and call `click()` on it. Making the host the
-  button keeps a single interactive element. A native `<button>` in the shadow
-  root would add a second one: the focus and the role would belong to the inner
-  button, while the listeners stay on the host.
+- **Why:** the other components treat
+  [`<button-custom>`](/module/components-button-custom/buttoncustom) as the
+  button: they add their listeners to it, and the focus trap of
+  [`Modal`](/module/modal/modal) focuses it. Making the host the button keeps a
+  single interactive element. A native `<button>` in the shadow root would add a
+  second one: the focus and the role would belong to the inner button, while the
+  listeners stay on the host.
 - **Alternative:** a native `<button>` inside the shadow root. The shadow root
   is open, so other components could reach that inner button, but working with
   the custom element itself is more intuitive.
@@ -292,12 +301,18 @@ time to define `ButtonVariant`, so the two cannot drift apart. The helper
   even when `hide-label` hides it. The component does not read an `aria-label`
   attribute set by the caller.
 - **Why:** a deliberate choice: the text content is the single source of the
-  label, visible or not. _(hypothesis)_ This is how a native `<button>` gets its
-  name.
+  label, visible or not. By default, a native `<button>` also takes its name
+  from its content.
 - **Alternative:** accepting an `aria-label` attribute, at least as a fallback
   for icon-only buttons.
 - **Cost:** an icon-only button still needs its text, and a `MutationObserver`
   is required to keep `aria-label` in sync when the text changes.
+- **Known limitation:** the component writes `aria-label` as an attribute on its
+  host, so an `aria-label` set by the caller is overwritten. A native `<button>`
+  lets `aria-label` override the name that comes from its content. A planned
+  change moves the ARIA defaults to `ElementInternals`: the text content will
+  remain the default name, and an `aria-label` set by the caller will override
+  it.
 - **Skill demonstrated:** slots, `assignedNodes()`, `MutationObserver`, and
   accessible names.
 
