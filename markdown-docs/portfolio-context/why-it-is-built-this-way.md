@@ -11,6 +11,15 @@ choices that follow from that context. The
 [skills map](/portfolio-context/skills-map) lists the skills it demonstrates and
 where to find each one.
 
+## Scope
+
+This application is a demo, and it is not meant to become a product.
+
+- **No server.** There is no backend, no account and no synchronization. The
+  data stays in the `localStorage` of one browser, on one device.
+- **Desktop only.** There is no responsive layout. The application is not meant
+  to work on a phone or a tablet.
+
 ## No framework and no library
 
 Creating an application with a framework or a library doesn't always mean that
@@ -37,9 +46,10 @@ As many JavaScript frameworks do, I kept `index.html` to the bare minimum: the
 page is built entirely in JavaScript.
 
 As this is a JavaScript demonstration and not an HTML syntax demo, I avoided
-`innerHTML` almost everywhere. The only exception is `modal.js`, where I kept
-`innerHTML` for the basic structure. It could have been done by creating the
-elements manually, but I chose to demonstrate an alternative.
+`innerHTML` almost everywhere. The only exception is
+[`modal.js`](/module/modal), where I kept `innerHTML` for the basic structure.
+It could have been done by creating the elements manually, but I chose to
+demonstrate an alternative.
 
 ## No hard standards, various methods
 
