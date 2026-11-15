@@ -11,7 +11,7 @@
     "fix:lint": "eslint . --fix",
     "fix:format": "prettier --write .",
     "docs:build": "typedoc",
-    "site:stage": "pnpm run docs:build && rm -rf dist && mkdir dist && cp -r assets css data docs icons js dist/ && cp index.html favicon.ico site.webmanifest dist/",
+    "site:stage": "pnpm run docs:build && rm -rf dist && mkdir dist && cp -r assets css data docs icons js types dist/ && cp index.html favicon.ico site.webmanifest dist/",
     "test": "pnpm run test:unit && playwright test",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
