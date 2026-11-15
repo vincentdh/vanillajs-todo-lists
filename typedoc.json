@@ -3,9 +3,26 @@
   "entryPoints": ["./js"],
   "tsconfig": "./tsconfig.json",
   "entryPointStrategy": "expand",
-  "outputs": [{ "name": "html", "path": "docs/" }],
+  "plugin": ["@clean-jsdoc-theme/typedoc"],
+  "outputs": [
+    { "name": "clean-jsdoc-theme", "path": "docs/" },
+    { "name": "html", "path": "docs/typedoc" }
+  ],
   "readme": "README.md",
   "name": "VanillaJS To-do Lists",
   "excludeExternals": true,
-  "excludePrivate": false
+  "excludePrivate": false,
+  "cleanJsdocTheme": {
+    "siteName": "VanillaJS To-do lists",
+    "basePath": "/docs",
+    "docs": "./markdown-docs",
+    "clubSidebarItems": true,
+    "copyPage": { "enabled": false },
+    "docGroups": ["Portfolio context", "Under the hood", "User guide"],
+    "fonts": {
+      "heading": "IBM Plex Sans",
+      "body": "Fira Code",
+      "mono": "Fira Code"
+    }
+  }
 }
