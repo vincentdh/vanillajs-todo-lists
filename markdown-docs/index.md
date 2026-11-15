@@ -10,22 +10,22 @@ runtime dependencies, it uses native Web Components, Shadow DOM and
 
 This documentation has three parts.
 
-## Portfolio context
+## 1. Portfolio context
 
 Why this project exists, and what it demonstrates.
 
-- [Why it is built this way](/portfolio-context/design-decisions): the general
-  choices that come from being a portfolio piece.
+- [Why it is built this way](/portfolio-context/why-it-is-built-this-way): the
+  general choices that come from being a portfolio piece.
 - [Skills map](/portfolio-context/skills-map): the skills it demonstrates, and
   where to find each one in the code.
 
-## Under the hood
+## 2. Under the hood
 
 How the application works, and the reasons behind each technical choice. Start
 with [Architecture](/under-the-hood/architecture): how the application starts,
 how it is divided into components, and how they communicate.
 
-## User guide
+## 3. User guide
 
 How to use the application: create lists, add tasks, and manage them. Start with
 [First steps](/user-guide/first-steps).
