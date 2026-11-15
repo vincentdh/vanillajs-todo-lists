@@ -24,7 +24,9 @@ authentication, multi-user support, advanced features, or AI integrations. There
 is no responsive layout, and it is not meant to work on a phone or tablet.
 
 I'm not a graphic designer and did not use any kind of resource (human or AI)
-for the visual design process.
+for the visual design process. The only exception is the application logo: its
+original SVG was created by Claude.ai, and I recreated it in JavaScript like the
+other icons.
 
 ## Lint, format and types
 
