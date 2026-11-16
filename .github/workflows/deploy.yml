@@ -29,12 +29,13 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     uses: ./.github/workflows/tests.yml
 
-  deploy:
-    name: Build and deploy to Cloudflare Pages
+  stage:
+    name: Prepare files for deployment
     needs: tests
-    # Run when tests passed or were skipped
     if: ${{ always() && !cancelled() && needs.tests.result != 'failure' }}
     runs-on: ubuntu-latest
+    outputs:
+      pages-branch: ${{ steps.pages.outputs.branch }}
     # The environment provides the TYPEDOC_SITE_URL and PAGES_BRANCH variables:
     # release -> production, manual run -> the selected target,
     # push to main -> preview, push to dev -> dev
@@ -54,6 +55,15 @@ jobs:
         run: |
           echo "Production deploys must run from main" >&2
           exit 1
+
+      # The deploy job has no environment: it gets the branch from this output
+      - name: Read the Pages branch
+        id: pages
+        env:
+          PAGES_BRANCH: ${{ vars.PAGES_BRANCH }}
+        run: |
+          test -n "$PAGES_BRANCH" || { echo "PAGES_BRANCH is not set" >&2; exit 1; }
+          echo "branch=$PAGES_BRANCH" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v7
 
@@ -80,15 +90,32 @@ jobs:
       - name: Stage site
         run: pnpm run site:stage
 
-      - name: Check the Pages branch
-        env:
-          PAGES_BRANCH: ${{ vars.PAGES_BRANCH }}
-        run: |
-          test -n "$PAGES_BRANCH" || { echo "PAGES_BRANCH is not set" >&2; exit 1; }
+      - name: Upload site
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
+
+  # The wrangler-action fail in a pnpm environment as 
+  # it requires a build script.
+  # Workaround: Spliting `stage` and `deploy` jobs
+  # See: https://github.com/cloudflare/wrangler-action/pull/468          
+  deploy:
+    name: Deploy to Cloudflare Pages
+    needs: stage
+    # The skipped tests job would also skip this job without always()
+    if: ${{ always() && !cancelled() && needs.stage.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download site
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist/
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=${{ vars.PAGES_BRANCH }}
+          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=${{ needs.stage.outputs.pages-branch }}
