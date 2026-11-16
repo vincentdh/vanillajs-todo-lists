@@ -96,10 +96,10 @@ jobs:
           name: site
           path: dist/
 
-  # The wrangler-action fail in a pnpm environment as 
+  # The wrangler-action fail in a pnpm environment as
   # it requires a build script.
   # Workaround: Spliting `stage` and `deploy` jobs
-  # See: https://github.com/cloudflare/wrangler-action/pull/468          
+  # See: https://github.com/cloudflare/wrangler-action/pull/468
   deploy:
     name: Deploy to Cloudflare Pages
     needs: stage
