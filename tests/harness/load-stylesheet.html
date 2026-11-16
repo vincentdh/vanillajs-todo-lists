@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>loadStylesheet test harness</title>
+  </head>
+  <body>
+    <p id="target" class="framed">Styled by the loaded stylesheet</p>
+    <script type="module">
+      import { loadStylesheet } from '../../js/utils/loadStylesheet.js'
+
+      window.loadStylesheet = loadStylesheet
+      window.harnessReady = true
+    </script>
+  </body>
+</html>
