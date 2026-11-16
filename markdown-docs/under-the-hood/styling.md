@@ -31,14 +31,18 @@ utility framework and no CSS-in-JS library. The styles are split in two levels:
 
 ## How a component gets its styles
 
-A component imports its stylesheet like any other module:
+Every component uses a toplevel `await` with the function
+[`loadStylesheet()`](/module/utils-loadstylesheet/loadstylesheet) to import it's
+CSS stylesheet.
 
 ```js
-import stylesheet from './style.css' with { type: 'css' }
+import { loadStylesheet } from '../../utils/loadStylesheet.js'
+
+const stylesheet = await loadStylesheet(new URL('./style.css', import.meta.url))
 ```
 
-The `with { type: 'css' }` attribute tells the browser to load the file as a CSS
-module script. The import gives a `CSSStyleSheet` object, not text.
+The [`loadStylesheet()`](/module/utils-loadstylesheet/loadstylesheet) returns a
+`CSSStyleSheet` object, not text.
 
 The component gives this object to its base class, which adds it to the
 `adoptedStyleSheets` of the shadow root:

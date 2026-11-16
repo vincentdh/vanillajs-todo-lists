@@ -12,7 +12,7 @@ on:
         type: choice
         options:
           - dev
-          - main-preview
+          - preview
           - production
 
 permissions:
@@ -23,15 +23,48 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Sanity check: the same unit and e2e tests as on pull requests
+  # Test is on manual trigger only: pushes and releases are already tested
+  # by the required checks on the pull request (see the main ruleset)
   tests:
+    if: github.event_name == 'workflow_dispatch'
     uses: ./.github/workflows/tests.yml
 
   stage:
-    name: Build the site
+    name: Prepare files for deployment
     needs: tests
+    if: ${{ always() && !cancelled() && needs.tests.result != 'failure' }}
     runs-on: ubuntu-latest
+    outputs:
+      pages-branch: ${{ steps.pages.outputs.branch }}
+    # The environment provides the TYPEDOC_SITE_URL and PAGES_BRANCH variables:
+    # release -> production, manual run -> the selected target,
+    # push to main -> preview, push to dev -> dev
+    environment:
+      name: >-
+        ${{
+          github.event_name == 'release' && 'production'
+          || inputs.target
+          || github.ref_name == 'main' && 'preview'
+          || 'dev'
+        }}
+      url: ${{ vars.TYPEDOC_SITE_URL }}
     steps:
+      # Safety guard for manual trigger. Production can run only on main
+      - name: Refuse production from a non-main ref
+        if: inputs.target == 'production' && github.ref != 'refs/heads/main'
+        run: |
+          echo "Production deploys must run from main" >&2
+          exit 1
+
+      # The deploy job has no environment: it gets the branch from this output
+      - name: Read the Pages branch
+        id: pages
+        env:
+          PAGES_BRANCH: ${{ vars.PAGES_BRANCH }}
+        run: |
+          test -n "$PAGES_BRANCH" || { echo "PAGES_BRANCH is not set" >&2; exit 1; }
+          echo "branch=$PAGES_BRANCH" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v7
 
       - name: Setup pnpm and Node.js
@@ -45,9 +78,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Stage site
+      # docs:build reads cleanJsdocTheme.siteUrl from typedoc.json
+      - name: Set TypeDoc site URL
+        env:
+          TYPEDOC_SITE_URL: ${{ vars.TYPEDOC_SITE_URL }}
         run: |
-          pnpm run site:stage
+          test -n "$TYPEDOC_SITE_URL" || { echo "TYPEDOC_SITE_URL is not set" >&2; exit 1; }
+          sed -i -E "s|\"siteUrl\": \"[^\"]*\"|\"siteUrl\": \"$TYPEDOC_SITE_URL\"|" typedoc.json
+          grep -q "\"siteUrl\": \"$TYPEDOC_SITE_URL\"" typedoc.json
+
+      - name: Stage site
+        run: pnpm run site:stage
 
       - name: Upload site
         uses: actions/upload-artifact@v4
@@ -55,43 +96,26 @@ jobs:
           name: site
           path: dist/
 
+  # The wrangler-action fail in a pnpm environment as
+  # it requires a build script.
+  # Workaround: Spliting `stage` and `deploy` jobs
+  # See: https://github.com/cloudflare/wrangler-action/pull/468
   deploy:
-    name: Deploy to Cloudflare Pages (preview or production)
+    name: Deploy to Cloudflare Pages
     needs: stage
+    # The skipped tests job would also skip this job without always()
+    if: ${{ always() && !cancelled() && needs.stage.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      # Safety guard for manual trigger. Production can run only on main
-      - name: Refuse production from a non-main ref
-        if: inputs.target == 'production' && github.ref != 'refs/heads/main'
-        run: |
-          echo "Production deploys must run from main" >&2
-          exit 1
-
       - name: Download site
         uses: actions/download-artifact@v4
         with:
           name: site
           path: dist/
 
-      - name: Deploy to Cloudflare Pages production
-        if: github.event_name == 'release'
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=main
-
-      - name: Deploy to Cloudflare Pages (branch)
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-        uses: cloudflare/wrangler-action@v4
-        env:
-          PAGES_BRANCH: >-
-            ${{
-              github.event_name == 'push' && (github.ref_name == 'main' && 'main-preview' || 'dev') ||
-              inputs.target == 'production' && 'main' ||
-              inputs.target
-            }}
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=${{ env.PAGES_BRANCH }}
+          command: pages deploy dist --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch=${{ needs.stage.outputs.pages-branch }}

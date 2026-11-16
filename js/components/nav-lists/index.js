@@ -1,8 +1,10 @@
 import { BasicComponentInterface } from '../../lib/interfaces/basic-component-interface.js'
 import Modal from '../../modal.js'
 import { lists } from '../../models/lists.js'
+import { loadStylesheet } from '../../utils/loadStylesheet.js'
 import { ListSelectedEvent } from './list-selected-event.js'
-import stylesheet from './style.css' with { type: 'css' }
+
+const stylesheet = await loadStylesheet(new URL('./style.css', import.meta.url))
 
 /** @import { ListRenamedEvent } from '../list-view/list-renamed-event.js' */
 /** @import { ContainerBox } from '../container-box/index.js'*/
