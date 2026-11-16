@@ -1,8 +1,10 @@
 import { BasicComponentInterface } from '../../lib/interfaces/basic-component-interface.js'
 import { QueuableComponent } from '../../lib/interfaces/queuable-component-mixin.js'
 import { scrollbarStylesheet } from '../../utils/index.js'
+import { loadStylesheet } from '../../utils/loadStylesheet.js'
 import { CONTAINER_BOX_ATTRIBUTES } from './constants.js'
-import stylesheet from './style.css' with { type: 'css' }
+
+const stylesheet = await loadStylesheet(new URL('./style.css', import.meta.url))
 
 /** @import { ContainerBoxAttribute } from './constants.js' */
 /** @import { BasicComponentConstructor, AttributeSetter } from '../../lib/interfaces/queuable-component-mixin.js' */

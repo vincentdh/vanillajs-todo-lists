@@ -5,8 +5,10 @@ import { BasicComponentInterface } from '../../lib/interfaces/basic-component-in
 import { store } from '../../lib/services/storage.js'
 import { Modal } from '../../modal.js'
 import { buildTagElement } from '../../utils/html-builder.js'
+import { loadStylesheet } from '../../utils/loadStylesheet.js'
 import { LICENSE_ACKNOWLEDGMENT } from './license-acknowledgment.js'
-import stylesheet from './style.css' with { type: 'css' }
+
+const stylesheet = await loadStylesheet(new URL('./style.css', import.meta.url))
 
 /** @import { SVGIcon } from '../svg-icon/index.js' */
 

@@ -1,9 +1,11 @@
 import { BasicComponentInterface } from '../../lib/interfaces/basic-component-interface.js'
 import { QueuableComponent } from '../../lib/interfaces/queuable-component-mixin.js'
 import { isOneOf } from '../../utils/index.js'
+import { loadStylesheet } from '../../utils/loadStylesheet.js'
 import { SVG_ICON_ATTRIBUTES } from './constants.js'
 import { icons, ICON_NAMES } from './icons.js'
-import stylesheet from './style.css' with { type: 'css' }
+
+const stylesheet = await loadStylesheet(new URL('./style.css', import.meta.url))
 
 /** @import { SVGIconAttribute } from './constants.js' */
 /** @import { BasicComponentConstructor, AttributeSetter } from '../../lib/interfaces/queuable-component-mixin.js' */

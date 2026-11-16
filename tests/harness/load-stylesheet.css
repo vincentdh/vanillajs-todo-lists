@@ -1,0 +1,8 @@
+/* Fixture for tests/e2e/load-stylesheet.spec.js: exactly two rules. */
+#target {
+  color: rgb(1, 2, 3);
+}
+
+.framed {
+  border-top: 7px solid rgb(4, 5, 6);
+}

@@ -1,13 +1,15 @@
 import { BasicComponentInterface } from '../../lib/interfaces/basic-component-interface.js'
 import { QueuableComponent } from '../../lib/interfaces/queuable-component-mixin.js'
 import { isOneOf } from '../../utils/index.js'
+import { loadStylesheet } from '../../utils/loadStylesheet.js'
 import { ICON_NAMES } from '../svg-icon/icons.js'
 import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_ATTRIBUTES,
 } from './constants.js'
-import stylesheet from './style.css' with { type: 'css' }
+
+const stylesheet = await loadStylesheet(new URL('./style.css', import.meta.url))
 
 /** @import { BasicComponentConstructor, AttributeSetter } from '../../lib/interfaces/queuable-component-mixin.js' */
 /** @import {ButtonCustomAttributes, ButtonVariant} from './constants.js' */

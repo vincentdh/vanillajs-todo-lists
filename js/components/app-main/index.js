@@ -3,7 +3,9 @@ import { BasicComponentInterface } from '../../lib/interfaces/basic-component-in
 import { Modal } from '../../modal.js'
 import { lists } from '../../models/lists.js'
 import { randomMinMax, randomPick } from '../../utils/index.js'
-import stylesheet from './style.css' with { type: 'css' }
+import { loadStylesheet } from '../../utils/loadStylesheet.js'
+
+const stylesheet = await loadStylesheet(new URL('./style.css', import.meta.url))
 
 /** @import { ListView } from '../list-view/index.js' */
 /** @import { NavLists } from '../nav-lists/index.js' */
