@@ -19,6 +19,11 @@
     "clubSidebarItems": true,
     "copyPage": { "enabled": false },
     "docGroups": ["Portfolio context", "Under the hood", "User guide"],
+    "siteUrl": "http://127.0.0.1:5173",
+    "llmsTxt": {
+      "api": true,
+      "full": true
+    },
     "fonts": {
       "heading": "IBM Plex Sans",
       "body": "Fira Code",
